@@ -5,6 +5,8 @@ import Axios from 'axios';
 import Results from './results';
 import 'semantic-ui-css/semantic.min.css';
 
+/*This access token is temporary and I'll remove it later.*/
+
 class App extends Component {
     constructor(){
         super();
@@ -22,16 +24,13 @@ class App extends Component {
 
         if(StoredValue){
             StateObject.data = StoredValue.data;
-          //StoredValue.followers_url;
-          //StoredValue.following_url;
-
             Axios
-                .get(`https://api.github.com/users/${currentInput}/followers?per_page=100`)
+                .get(`https://api.github.com/users/${currentInput}/followers?access_token=636bee4e5205c087bf086bbd36d5146b2a3a76ae&per_page=100`)
                 .then((response) => {
                     StateObject.followers = response.data;
 
                     Axios
-                        .get(`https://api.github.com/users/${currentInput}/following?per_page=100`)
+                        .get(`https://api.github.com/users/${currentInput}/following?access_token=636bee4e5205c087bf086bbd36d5146b2a3a76ae&per_page=100`)
                         .then((_response) => {
                             StateObject.following = _response.data;
                         })
@@ -46,8 +45,9 @@ class App extends Component {
                     console.error(err)
                 })
         }else{
+            
             Axios
-                .get(`https://api.github.com/users/${currentInput}?access_token=dc29f8ff05e765a7f65fcbfd0791f0a7c5cc15f3`)
+                .get(`https://api.github.com/users/${currentInput}?access_token=636bee4e5205c087bf086bbd36d5146b2a3a76ae&per_page=100`)
                 .then((response) => {
 
                     //Saving info in local storage to access later
@@ -56,11 +56,11 @@ class App extends Component {
 
                     StateObject.data = response.data;
                     Axios
-                        .get(`https://api.github.com/users/${currentInput}/followers?per_page=100`)
+                        .get(`https://api.github.com/users/${currentInput}/followers?access_token=636bee4e5205c087bf086bbd36d5146b2a3a76ae&per_page=100`)
                         .then((_response) => {
                             StateObject.followers = _response.data;
                             Axios
-                                .get(`https://api.github.com/users/${currentInput}/following?per_page=1000`)
+                                .get(`https://api.github.com/users/${currentInput}/following?access_token=636bee4e5205c087bf086bbd36d5146b2a3a76ae&per_page=100`)
                                 .then((__response) => {
                                     // I use _ for one level of chaining, and __ for 2 levels as parameter
                                     StateObject.following = __response.data;
